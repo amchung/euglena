@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<p>
+		<h1>Live Webcam Preview</h1>
+		<img id="euglena" src="http://171.65.102.132:8070/?action=stream" type="video/mpeg" debug="true">
+	</p>
+	<canvas id="myCanvas" width="640" height="480"
+		style="border:1px solid #000000;">
+	</canvas>
+	<script>
+		var c=document.getElementById("myCanvas");	
+		var ctx=c.getContext("2d");	
+		var img = document.getElementById("vid");
+		ctx.drawImage(img,0,0);
+	</script>
+</body>
+
+</html>
