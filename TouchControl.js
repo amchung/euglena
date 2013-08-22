@@ -55,12 +55,12 @@ var IOBoard = BO.IOBoard;
 var IOBoardEvent = BO.IOBoardEvent;
 var Pin = BO.Pin;
 
-// Variables
+//// Variables
+// LED related
 var led1; //-90
 var led2; //0
 var led3; //90
 var led4; //180=-180
-
 var LEDloopON = false;
 var LEDcont = 1;
 
@@ -68,9 +68,16 @@ var frame = 0;
 var lastUpdateTime = 0;
 var acDelta = 0;
 var msPerFrame = 10;
+
+// live streaming
 var frameLastUpdateTime = 0;
 var frameACDelta = 0;
-var msMovieFrame = 50;
+var msMovieFrame = 100;
+
+// recording
+var boolRecOn = false;
+var recFrameNum = 1;
+var username = 'johndoe';
 
 // Set to true to print debug messages to console
 BO.enableDebugging = true; 
@@ -117,6 +124,10 @@ function onReady(event) {
 	led2 = arduino.getDigitalPin(6);
 	led3 = arduino.getDigitalPin(9);
 	led4 = arduino.getDigitalPin(10);
+	
+	// Use jQuery to get a reference to the buttons
+    // and listen for click events
+    $('#btnRecord').on('click', turnRecOn);
 }
 
 function resetCanvas(e) {
@@ -129,15 +140,15 @@ function resetCanvas(e) {
     halfWidth = fg_canvas.width / 2;
     halfHeight = fg_canvas.height / 2;
 
-    //make sure we scroll to the top left. 
+    // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
 }
 
 function draw() {
 	c.clearRect(0, 0, fg_canvas.width, fg_canvas.height);
 	
+	//// webcam streaming
 	var frameDelta = Date.now() - frameLastUpdateTime;
-    
     if (frameACDelta > msMovieFrame)
     {
         frameACDelta = 0;
@@ -146,13 +157,42 @@ function draw() {
     		bg_c.drawImage(img, 0, 0, img.width * (window.innerHeight/img.height), window.innerHeight);
 		};
 		img.src = "http://171.65.102.132:8070/?action=snapshot?t=" + new Date().getTime();
+		if(boolRecOn)
+		{
+			if(recFrameNum < 101)
+			{
+				var recFrameName = "frame"+recFrameNum.toString();
+				
+				// call mjpeg_cap.php
+				$.ajax({
+   					url: 'http://171.65.102.132/php-euglena/mjpeg_cap.php?name='+recFrameName,
+   					success: function (response) {//response is value returned from php
+     				alert(response);
+   					}
+				});
+				recFrameNum=++recFrameNum;
+			}
+			else
+			{
+				var strFramerate = Math.ceil(1000/msMovieFrame);
+				// call makevideo.php
+				$.ajax({
+   					url: 'http://171.65.102.132/php-euglena/makevideo.php?framerate='+strFramerate.toString()+'&name='+username,
+   					success: function (response) {//response is value returned from php
+     				alert(response);
+   					}
+				});
+				recFrameNum = 1;
+				boolRecOn = false;
+			}
+		}
     } else
     {
         frameACDelta += frameDelta;
     }
-    
     frameLastUpdateTime = Date.now();
 
+	//// mouse event loop
     touches.forEach(function (touch) {
         if (touch.identifier == leftPointerID) {
             c.beginPath();
@@ -198,8 +238,8 @@ function draw() {
 
     requestAnimFrame(draw);
     
+    //// LED control loop
     var delta = Date.now() - lastUpdateTime;
-    
     if (acDelta > msPerFrame)
     {
         acDelta = 0;
@@ -215,7 +255,6 @@ function draw() {
     {
         acDelta += delta;
     }
-    
     lastUpdateTime = Date.now();
 }
 
@@ -295,6 +334,7 @@ function setupCanvas() {
     c.lineWidth = 2;
 }
 
+// Arduino control functions
 function changeLED(LEDon) {
 	if(LEDon)
 	{
@@ -312,3 +352,8 @@ function changeLED(LEDon) {
 	}
 }
 
+// video recording and saving functions
+function turnRecOn(evt) {
+	RecFrameNum=1;
+    boolRecOn=true;
+}

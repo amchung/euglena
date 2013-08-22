@@ -23,3 +23,12 @@ canvas {
     text-align: center;
     background-color: #ff0000;
 }
+
+.Btns {
+    padding: 10px;
+    font-size: 22px;
+    width: 130px;
+    color: #00AEFF;
+    margin-bottom: 20px;
+    position: absolute;
+}

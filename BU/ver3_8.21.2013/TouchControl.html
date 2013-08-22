@@ -38,15 +38,16 @@
     <script src="Collection.js"></script>
     <script src="Vector2.js"></script>
     <script src="VectorLED.js"></script>
-	<script src="../../../dist/Breakout.js"></script>
-	<script src="../../libs/jquery-1.9.0.min.js"></script>
-	<script src="../../libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
-	<script src="../../libs/jquery.ui.touch-punch.min.js"></script>
+	<script src="dist/Breakout.js"></script>
+	<script src="libs/jquery-1.9.0.min.js"></script>
+	<script src="libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="libs/jquery.ui.touch-punch.min.js"></script>
     <script src="TouchControl.js"></script>
 </head>
 <body>
     <div class="container">
-        <canvas id="canvasSurfaceGame"></canvas>
+    	<canvas id="bg" z-index: 0"></canvas>
+	<canvas id="fg" z-index: 1"></canvas>
     </div>
 </body>
 </html>

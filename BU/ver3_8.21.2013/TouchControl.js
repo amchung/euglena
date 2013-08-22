@@ -35,8 +35,10 @@ window.requestAnimFrame = (function () {
     };
 })();
 
-var canvas,
-c, // c is the canvas' context 2D
+var fg_canvas,
+c,	// c is the fg_canvas' context 2D
+bg_canvas,
+bg_c,
 container,
 halfWidth,
 halfHeight,
@@ -47,7 +49,6 @@ leftVector = new Vector2(0, 0);
 arrow = new VectorLED(0, 0, 0, 0);
 
 var touches; // collections of pointers
-
 
 /////////////////////////////// ARDUINO SETUP 
 var IOBoard = BO.IOBoard;
@@ -61,12 +62,15 @@ var led3; //90
 var led4; //180=-180
 
 var LEDloopON = false;
+var LEDcont = 1;
 
 var frame = 0;
 var lastUpdateTime = 0;
 var acDelta = 0;
 var msPerFrame = 10;
-
+var frameLastUpdateTime = 0;
+var frameACDelta = 0;
+var msMovieFrame = 100;
 
 // Set to true to print debug messages to console
 BO.enableDebugging = true; 
@@ -88,10 +92,10 @@ function init() {
     setupCanvas();
     touches = new Collection();
     
-    canvas.addEventListener('pointerdown', onPointerDown, false);
-    canvas.addEventListener('pointermove', onPointerMove, false);
-    canvas.addEventListener('pointerup', onPointerUp, false);
-    canvas.addEventListener('pointerout', onPointerUp, false);
+    fg_canvas.addEventListener('pointerdown', onPointerDown, false);
+    fg_canvas.addEventListener('pointermove', onPointerMove, false);
+    fg_canvas.addEventListener('pointerup', onPointerUp, false);
+    fg_canvas.addEventListener('pointerout', onPointerUp, false);
     
     requestAnimFrame(draw);
     arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -117,23 +121,42 @@ function onReady(event) {
 
 function resetCanvas(e) {
     // resize the canvas - but remember - this clears the canvas too. 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    fg_canvas.width = window.innerWidth;
+    fg_canvas.height = window.innerHeight;
+    bg_canvas.width = window.innerWidth;
+    bg_canvas.height = window.innerHeight;
 
-    halfWidth = canvas.width / 2;
-    halfHeight = canvas.height / 2;
+    halfWidth = fg_canvas.width / 2;
+    halfHeight = fg_canvas.height / 2;
 
     //make sure we scroll to the top left. 
     window.scrollTo(0, 0);
 }
 
 function draw() {
-    c.clearRect(0, 0, canvas.width, canvas.height);
+	c.clearRect(0, 0, fg_canvas.width, fg_canvas.height);
+	
+	var frameDelta = Date.now() - frameLastUpdateTime;
     
+    if (frameACDelta > msMovieFrame)
+    {
+        frameACDelta = 0;
+        var img = new Image();
+		img.onload = function() {
+    		bg_c.drawImage(img, 0, 0, img.width * (window.innerHeight/img.height), window.innerHeight);
+		};
+		img.src = "http://171.65.102.132:8070/?action=snapshot?t=" + new Date().getTime();
+    } else
+    {
+        frameACDelta += frameDelta;
+    }
+    
+    frameLastUpdateTime = Date.now();
+
     touches.forEach(function (touch) {
         if (touch.identifier == leftPointerID) {
             c.beginPath();
-            c.strokeStyle = "white";
+            c.strokeStyle = "rgba(250, 102, 0)";
             c.lineWidth = 6;
             c.arc(leftPointerStartPos.x, leftPointerStartPos.y, 40, 0, Math.PI * 2, true);
             c.stroke();
@@ -143,7 +166,7 @@ function draw() {
             var alpha = arrow.trimArrow(leftVector);
             
             c.beginPath();
-            c.fillStyle = "rgba(250, 102, 0, "+alpha*(frame%2)+")";
+            c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
             c.arc(leftPointerPos.x, leftPointerPos.y, 30, 0, Math.PI * 2, true);
             c.fill();
             
@@ -180,7 +203,12 @@ function draw() {
     if (acDelta > msPerFrame)
     {
         acDelta = 0;
-        if(LEDloopON) {changeLED(frame%2);}
+        if(LEDloopON) 
+        {
+        	//LEDon = frame%2;
+        	LEDcont = 1;
+        	changeLED(LEDcont);
+        }
         frame++;
         if (frame >= 2) {frame = 0;}
     } else
@@ -258,8 +286,10 @@ function onPointerUp(e) {
 }
 
 function setupCanvas() {
-    canvas = document.getElementById('canvasSurfaceGame');
-    c = canvas.getContext('2d');
+    fg_canvas = document.getElementById('fg');
+    c = fg_canvas.getContext('2d');
+    bg_canvas = document.getElementById('bg');
+    bg_c = bg_canvas.getContext('2d');
     resetCanvas();
     c.strokeStyle = "#ffffff";
     c.lineWidth = 2;

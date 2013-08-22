@@ -27,8 +27,12 @@ VectorLED.prototype = {
 	
 		var magn = vect.magnitude();
 
-		magn=magn/200; 
-		magn=magn.toFixed(2); 
+		//magn=magn/200; 
+		//magn=magn.toFixed(2); 
+		
+		magn=Math.sqrt(magn);
+		magn=magn/14;
+		magn=magn.toFixed(2);
 		
 		if (magn>1){
 			magn=1;
@@ -52,25 +56,25 @@ VectorLED.prototype = {
 		var vect = vector.clone();
 		vect.normalise();
 		
-		if (vect.x>0.1){
+		if (vect.x>0.03){
 			led2 = m * vect.x;
-			led2 = led2.toFixed(1);
+			led2 = led2.toFixed(2);
 		}
 		
-		if (vect.x<-0.1){
+		if (vect.x<-0.03){
 			led4 = m * vect.x;
-			led4 = led4.toFixed(1);
+			led4 = led4.toFixed(2);
 			led4 = -led4;
 		}
 		
-		if (vect.y>0.1){
+		if (vect.y>0.03){
 			led1 = m * vect.y;
-			led1 = led1.toFixed(1);
+			led1 = led1.toFixed(2);
 		}
 		
-		if (vect.y<-0.1){
+		if (vect.y<-0.03){
 			led3 = m * vect.y;
-			led3 = led3.toFixed(1);
+			led3 = led3.toFixed(2);
 			led3 = -led3;
 		}
 
