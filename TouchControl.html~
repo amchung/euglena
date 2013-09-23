@@ -47,7 +47,8 @@
 <body>
     <div class="container">
     	<canvas id="bg" z-index="0"></canvas>
-	<canvas id="fg" z-index="1"></canvas>
+		<canvas id="fg" z-index="1"></canvas>
+		<button id="btnRecord" class="Btns" type="button" z-index="2">Record</button>
     </div>
 </body>
 </html>
