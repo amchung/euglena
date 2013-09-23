@@ -32,8 +32,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0;" />
-    <title>LED light controller - using HandJS</title>
-    <link rel="stylesheet" href="virtualjoystick.css" />
+    <title>Euglena Livecam</title>
+    <link rel="stylesheet" href="euglena.css" />
     <script src="hand.minified.js"></script>
     <script src="Collection.js"></script>
     <script src="Vector2.js"></script>
@@ -42,13 +42,33 @@
 	<script src="libs/jquery-1.9.0.min.js"></script>
 	<script src="libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
 	<script src="libs/jquery.ui.touch-punch.min.js"></script>
-    <script src="TouchControl.js"></script>
+    <script src="euglena.js"></script>
 </head>
 <body>
-    <div class="container">
-    	<canvas id="bg" z-index="0"></canvas>
+    <div class="video_container">
+		<canvas id="videoCanvas" width="800" height="600" z-index="0">
+			<p>
+				Please use a browser that supports the Canvas Element, like
+				<a href="http://www.google.com/chrome">Chrome</a>,
+				<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+				<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+			</p>
+		</canvas>
+		<script type="text/javascript" src="jsmpg.js"></script>
+		<script type="text/javascript">
+			// Show loading notice
+			var canvas = document.getElementById('videoCanvas');
+			var ctx = canvas.getContext('2d');
+			ctx.fillStyle = '#444';
+			ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
+
+			// Setup the WebSocket connection and start the player
+			var client = new WebSocket( 'ws://171.65.102.132:8084/' );
+			var player = new jsmpeg(client, {canvas:canvas});
+		</script>
+	</div>
+	<div class="container">
 		<canvas id="fg" z-index="1"></canvas>
-		<button id="btnRecord" class="Btns" type="button" z-index="2">Record</button>
     </div>
 </body>
 </html>

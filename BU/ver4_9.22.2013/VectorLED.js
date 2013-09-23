@@ -23,16 +23,16 @@ VectorLED.prototype = {
 
 	},
 	
-	trimArrow: function (vect, max_val){
+	trimArrow: function (vect){
 	
 		var magn = vect.magnitude();
 
-		magn=magn/max_val; 
-		magn=magn.toFixed(2); 
+		//magn=magn/200; 
+		//magn=magn.toFixed(2); 
 		
-		//magn=Math.sqrt(magn);
-		//magn=magn/14;
-		//magn=magn.toFixed(2);
+		magn=Math.sqrt(magn);
+		magn=magn/14;
+		magn=magn.toFixed(2);
 		
 		if (magn>1){
 			magn=1;
@@ -45,14 +45,14 @@ VectorLED.prototype = {
 	
 	},
 	
-	setArrow: function (vector, max_val){
+	setArrow: function (vector){
 	
 		var led1=0;
 		var led2=0;
 		var led3=0;
 		var led4=0;
 	
-		var m = this.trimArrow(vector, max_val);
+		var m = this.trimArrow(vector);
 		var vect = vector.clone();
 		vect.normalise();
 		
