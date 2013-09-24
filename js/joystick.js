@@ -85,6 +85,9 @@ window.onresize = resetCanvas;
 
 function init() {
     setupCanvas();
+    setupVidCanvas();
+    setupObjCanvas();
+	
     touches = new Collection();
     
     fg_canvas.addEventListener('pointerdown', onPointerDown, false);
@@ -128,7 +131,9 @@ function resetCanvas(e) {
 
 function draw() {
 	c.clearRect(0, 0, fg_canvas.width, fg_canvas.height);
-
+	
+	drawBox(ObjX,ObjY,40);
+	
     c.beginPath();
     c.moveTo(halfWidth, halfHeight-5);
     c.strokeStyle = "rgba(250, 102, 0, 1)";

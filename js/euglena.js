@@ -85,6 +85,9 @@ window.onresize = resetCanvas;
 
 function init() {
     setupCanvas();
+    setupVidCanvas();
+    setupObjCanvas();
+    
     touches = new Collection();
     
     fg_canvas.addEventListener('pointerdown', onPointerDown, false);
@@ -133,6 +136,7 @@ function resetCanvas(e) {
 function draw() {
 	c.clearRect(0, 0, fg_canvas.width, fg_canvas.height);
 
+	drawBox(halfWidth, halfHeight, 40);
 	//// mouse event loop
     touches.forEach(function (touch) {
         if (touch.identifier == leftPointerID) {

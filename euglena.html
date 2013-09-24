@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="css/euglena.css" />
 	<link rel="stylesheet" href="css/normalize.css" />
 	<link rel="stylesheet" href="css/foundation.css" />
-    <script src="js/hand.minified.js"></script>
+	<script src="js/hand.minified.js"></script>
     <script src="js/Collection.js"></script>
     <script src="js/Vector2.js"></script>
     <script src="js/VectorLED.js"></script>
@@ -44,8 +44,9 @@
 	<script src="libs/jquery-1.9.0.min.js"></script>
 	<script src="libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
 	<script src="libs/jquery.ui.touch-punch.min.js"></script>
-    <script src="js/joystick.js"></script>
-    <script src="js/object.js"></script>
+	<script src="js/object.js"></script>
+	<script src="js/jsmpg.js"></script>
+	<script src="js/joystick.js"></script>
     <script src="js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
@@ -74,7 +75,7 @@
 	</script>
 	<div class="row">
     	<div class="large-8 columns">
-			<canvas id="videoCanvas" width="800" height="600">
+			<canvas id="videoCanvas" style="z-index: 1; position: absolute;">
 				<p>
 					Please use a browser that supports the Canvas Element, like
 					<a href="http://www.google.com/chrome">Chrome</a>,
@@ -82,19 +83,7 @@
 					<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
 				</p>
 			</canvas>
-			<script type="text/javascript" src="js/jsmpg.js"></script>
-			<script type="text/javascript">
-				// Show loading notice
-				var canvas = document.getElementById('videoCanvas');
-				var ctx = canvas.getContext('2d');
-				ctx.fillStyle = '#444';
-				ctx.fillText('Loading...', canvas.width/2-30, canvas.height/3);
-
-				// Setup the WebSocket connection and start the player
-				var client = new WebSocket( 'ws://171.65.102.132:8084/' );
-				var player = new jsmpeg(client, {canvas:canvas});
-			</script>
-			<canvas id="objectCanvas" z-index="999"></canvas>
+			<canvas id="objCanvas" style="z-index: 2; position: absolute;"></canvas>
 		</div>
 		<div class="large-4 columns">
 			<canvas id="fg"></canvas>
