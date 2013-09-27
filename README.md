@@ -1,4 +1,0 @@
-euglena
-=======
-
-Euglena project @ Clark

@@ -35,7 +35,7 @@ window.requestAnimFrame = (function () {
     };
 })();
 
-var fg_canvas,
+var control_canvas,
 c,	// c is the fg_canvas' context 2D
 halfWidth,
 halfHeight,
@@ -60,7 +60,7 @@ var led3; //90
 var led4; //180=-180
 var LEDloopON = false;
 var LEDcont = 1;
-var max_val = 200;
+var max_val;
 
 var frame = 0;
 var lastUpdateTime = 0;
@@ -90,10 +90,10 @@ function init() {
 	
     touches = new Collection();
     
-    fg_canvas.addEventListener('pointerdown', onPointerDown, false);
-    fg_canvas.addEventListener('pointermove', onPointerMove, false);
-    fg_canvas.addEventListener('pointerup', onPointerUp, false);
-    fg_canvas.addEventListener('pointerout', onPointerUp, false);
+    control_canvas.addEventListener('pointerdown', onPointerDown, false);
+    control_canvas.addEventListener('pointermove', onPointerMove, false);
+    control_canvas.addEventListener('pointerup', onPointerUp, false);
+    control_canvas.addEventListener('pointerout', onPointerUp, false);
     
     requestAnimFrame(draw);
     arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -117,37 +117,25 @@ function onReady(event) {
 	led4 = arduino.getDigitalPin(10);
 }
 
-function resetCanvas(e) {
-    // resize the canvas - but remember - this clears the canvas too. 
-    fg_canvas.width = max_val*2;
-    fg_canvas.height = max_val*2;
-
-    halfWidth = fg_canvas.width / 2;
-    halfHeight = fg_canvas.height / 2;
-
-    // make sure we scroll to the top left. 
-    window.scrollTo(0, 0);
-}
-
 function draw() {
-	c.clearRect(0, 0, fg_canvas.width, fg_canvas.height);
+	c.clearRect(0, 0, control_canvas.width, control_canvas.height);
 	
 	drawBox(ObjX,ObjY,40);
 	
     c.beginPath();
-    c.moveTo(halfWidth, halfHeight-5);
+    c.moveTo(halfWidth, halfHeight-4);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
-    c.lineWidth = 3;
+    c.lineWidth = 2;
     //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
-    c.lineTo(halfWidth, halfHeight+5);
+    c.lineTo(halfWidth, halfHeight+4);
     c.stroke();
             
     c.beginPath();
-    c.moveTo(halfWidth+5, halfHeight);
+    c.moveTo(halfWidth+4, halfHeight);
     c.strokeStyle = "rgba(250, 102, 0, 1)";
-    c.lineWidth = 3;
+    c.lineWidth = 2;
     //c.arc(halfWidth, halfHeight, 40, 0, Math.PI * 2, true);
-    c.lineTo(halfWidth-5, halfHeight);
+    c.lineTo(halfWidth-4, halfHeight);
     c.stroke();
     
     drawCircles(halfWidth, halfHeight);
@@ -159,40 +147,29 @@ function draw() {
             
             c.beginPath();
             c.fillStyle = "rgba(250, 102, 0, 1)";
-            c.arc(leftPointerPos.x, leftPointerPos.y, 30, 0, Math.PI * 2, true);
+            c.arc(leftPointerPos.x, leftPointerPos.y, 16, 0, Math.PI * 2, true);
             c.fill();
             
             c.beginPath();
             c.moveTo(leftPointerStartPos.x,leftPointerStartPos.y);
             c.strokeStyle = "rgba(250, 102, 0, 1)";
 			c.lineTo(leftPointerStartPos.x+max_val*(arrow.int2-arrow.int4),leftPointerStartPos.y+max_val*(arrow.int1-arrow.int3));
-			c.lineWidth = 6;
+			c.lineWidth = 3;
 			c.stroke();
 			
 			c.beginPath();
 			c.fillStyle = "rgba(255, 255, 255, "+alpha*(LEDcont)+")";
-    		c.arc(halfWidth, halfHeight, 30, 0, Math.PI * 2, true);
+    		c.arc(halfWidth, halfHeight, 16, 0, Math.PI * 2, true);
     		c.fill();
 			
 			c.beginPath();
         	c.fillStyle = "#fff"; 
-        	c.fillText(alpha,halfWidth-10, halfHeight-35);
+        	c.fillText(alpha,halfWidth-10, halfHeight-25);
         	
         	c.beginPath();
         	c.fillStyle = "#dd6600";
         	var theta = leftVector.angle();
-        	c.fillText(theta.toFixed(0),leftPointerPos.x+20, leftPointerPos.y-30);
-
-        } else {
-            c.beginPath();
-            c.fillStyle = "white";
-            c.fillText("type : " + touch.type + " id : " + touch.identifier + " x:" + touch.x + " y:" + touch.y, touch.x + 30, touch.y - 30);
-
-            c.beginPath();
-            c.strokeStyle = "red";
-            c.lineWidth = "6";
-            c.arc(touch.x, touch.y, 40, 0, Math.PI * 2, true);
-            c.stroke();
+        	c.fillText(theta.toFixed(0),leftPointerPos.x+10, leftPointerPos.y-20);
         }
     });
 
@@ -220,7 +197,7 @@ function draw() {
 
 function drawCircles(xCenter,yCenter)
 {
-	var needle = new Vector2(190, 0);
+	var needle = new Vector2(max_val, 0);
 	for(var i=0;i<24*3;i++)
 	{
 		c.beginPath();
@@ -288,8 +265,8 @@ function onPointerUp(e) {
 }
 
 function setupCanvas() {
-    fg_canvas = document.getElementById('fg');
-    c = fg_canvas.getContext('2d');
+    control_canvas = document.getElementById('controlCanvas');
+    c = control_canvas.getContext('2d');
     resetCanvas();
     c.strokeStyle = "#ffffff";
     c.lineWidth = 2;
@@ -311,4 +288,20 @@ function changeLED(LEDon) {
     	led3.value = 0;
     	led4.value = 0;
 	}
+}
+
+
+function resetCanvas(e) {
+    max_val = (document.getElementById("controlArea").offsetWidth-60)/2;
+    
+    // resize the canvas - but remember - this clears the canvas too.
+    
+    control_canvas.width = max_val*2;
+    control_canvas.height = max_val*2;
+
+    halfWidth = control_canvas.width/2;
+    halfHeight = control_canvas.height/2;
+
+    // make sure we scroll to the top left. 
+    window.scrollTo(0, 0);
 }

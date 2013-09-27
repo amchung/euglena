@@ -8,10 +8,6 @@
     touch-action: none;
 }
 
-body {
-    background-color: #000000;
-}
-
 #fg {
-    margin-top: 50px;
+    margin-top: 0px;
 }

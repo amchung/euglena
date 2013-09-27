@@ -35,3 +35,4 @@ function drawBox(box_X,box_Y,box_L){
 	obj_c.rect(box_X - box_L/2, box_Y - box_L/2, box_L, box_L);
     obj_c.stroke();	
 }
+

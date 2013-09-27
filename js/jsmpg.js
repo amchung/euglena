@@ -489,6 +489,11 @@ jsmpeg.prototype.initBuffers = function() {
 	this.forwardCb = new MaybeClampedUint8Array(this.codedSize >> 2);
 	this.forwardCb32 = new Uint32Array(this.forwardCb.buffer);
 	
+	var gameArea = document.getElementById('canvasArea');
+    var widthToHeight = 4 / 3;
+    var newWidth = gameArea.innerWidth;
+    var newHeight = gameArea.innerHeight * widthToHeight;
+	
 	this.canvas.width = this.width;
 	this.canvas.height = this.height;
 	
