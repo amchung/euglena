@@ -48,10 +48,11 @@
 	<script src="js/object.js"></script>
 	<script src="js/jsmpg.js"></script>
 	<script src="js/joystick.js"></script>
+	<script src="js/md.js"></script>
 	
 </head>
 <body>
-	<div class="container">
+	<div class="container" style = "padding: 10px">
 		<div>
 			<div>
 				<h2 style="color: #00A2AD;">Euglena Livecam</h1>
@@ -74,6 +75,15 @@
 			</div>
 			<div style = "background:#000; padding: 8px; margin: 2px">
 				<canvas id="controlCanvas" style="z-index: 3"></canvas>
+			</div>
+	    </div>
+	    <div id="mdArea" style = "width:640px; padding: 10px;position:absolute; left: 0px;visibility:hidden;">
+			<div>
+				<h5>Motion Detection</h1>
+			</div>
+			<div style = "background:#000;">
+				<canvas id="mdCanvas" style="z-index: 4;"></canvas>
+				<!--<canvas id="testCanvas" style="z-index: 4; width: 640px; height: 480px;"></canvas>-->
 			</div>
 	    </div>
 	</div>

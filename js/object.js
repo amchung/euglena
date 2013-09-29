@@ -2,6 +2,7 @@ var obj_canvas,
 obj_c,
 ObjX,
 ObjY,
+ObjL=80,
 img1 = null,
 img2 = null,
 cp_canvas = null;
@@ -24,6 +25,7 @@ function setupVidCanvas() {
 function setupObjCanvas() {
     obj_canvas = document.getElementById('objCanvas');  
     obj_c = obj_canvas.getContext('2d');
+    drawBox(ObjX,ObjY,ObjL);
 }
 
 function drawBox(box_X,box_Y,box_L){

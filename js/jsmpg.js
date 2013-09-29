@@ -503,6 +503,8 @@ jsmpeg.prototype.initBuffers = function() {
 	ObjX = this.width/2;
 	ObjY = this.height/2;
 	
+	runMotionDetection();
+	
 	this.currentRGBA = this.canvasContext.getImageData(0, 0, this.width, this.height);
 	this.currentRGBA32 = new Uint32Array( this.currentRGBA.data.buffer );
 	this.fillArray(this.currentRGBA.data, 255);

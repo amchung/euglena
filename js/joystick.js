@@ -87,6 +87,7 @@ function init() {
     setupCanvas();
     setupVidCanvas();
     setupObjCanvas();
+    setupMotionDetection();
 	
     touches = new Collection();
     
@@ -119,8 +120,6 @@ function onReady(event) {
 
 function draw() {
 	c.clearRect(0, 0, control_canvas.width, control_canvas.height);
-	
-	drawBox(ObjX,ObjY,40);
 	
     c.beginPath();
     c.moveTo(halfWidth, halfHeight-4);
