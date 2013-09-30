@@ -45,14 +45,17 @@ function compare(image1, image2, ptX, ptY, threshold, ObjR) {
       // all values are stored in a linear array
       var i = x*4 + y*4*pixels1.width;
 
-      var ch0 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      var ch1 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
-      var ch2 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      var ch0 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      var ch1 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      var ch2 = ((pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      //var ch0 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      //var ch1 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
+      //var ch2 = (Math.abs(pixels1.data[i] - pixels2.data[i])>threshold)?255:0;
 
       // count differing pixels
       var n = (x<Math.round(ptX/2))?0:1;
-      n = n+(y<Math.round(ptY/2))?0:2;
-      movement[n] += Math.min(1, ch0 + ch1 + ch2);
+      var m = (y<Math.round(ptY/2))?0:2;
+      movement[n+m] += Math.min(1, ch0 + ch1 + ch2);
     }
   }
   
@@ -75,7 +78,7 @@ function newPictureComplete() {
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, ObjX, ObjY, 4, 55); 
+      res = compare(img1, img2, ObjX, ObjY, 4, 56); 
     }
     catch(e) {
       // errors can happen if the pictures were corrupted during transfer
@@ -89,15 +92,15 @@ function newPictureComplete() {
     var md_ctx = md_canvas.getContext("2d");
    // md_ctx.fillStyle = ( res > 5 ) ? "rgb(200,0,0)" : "rgb(0,200,0)";
     //md_ctx.fillRect (0, 50, 25, 50); md_ctx.fillRect (75, 50, 25, 50);
-    if ((res[0]>100)||(res[1]>100)||(res[2]>100)||(res[3]>100)){
+    if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }
     
-    ObjX=Math.max(ObjX+(res[0]+res[2]-res[1]-res[3])/8,0);
-    ObjX=Math.min(ObjX+(res[0]+res[2]-res[1]-res[3])/8,640);
+    ObjX=Math.max(ObjX+(res[0]+res[2]-res[1]-res[3])/6,0);
+    ObjX=Math.min(ObjX+(res[0]+res[2]-res[1]-res[3])/6,640);
     ObjX=Math.round(ObjX/2)*2;
-    ObjY=Math.max(ObjY+(res[0]+res[1]-res[2]-res[3])/8,0);
-    ObjY=Math.min(ObjY+(res[0]+res[1]-res[2]-res[3])/8,480);
+    ObjY=Math.max(ObjY+(res[0]+res[1]-res[2]-res[3])/6,0);
+    ObjY=Math.min(ObjY+(res[0]+res[1]-res[2]-res[3])/6,480);
     ObjY=Math.round(ObjY/2)*2;
 
     drawBox(ObjX,ObjY,ObjL);
