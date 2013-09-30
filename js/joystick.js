@@ -96,7 +96,6 @@ function init() {
     control_canvas.addEventListener('pointerup', onPointerUp, false);
     control_canvas.addEventListener('pointerout', onPointerUp, false);
     
-    requestAnimFrame(draw);
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 }
 
@@ -116,6 +115,12 @@ function onReady(event) {
 	led2 = arduino.getDigitalPin(6);
 	led3 = arduino.getDigitalPin(9);
 	led4 = arduino.getDigitalPin(10);
+	
+	// jQuery part for the button
+	$('#button').click(function(){
+        resetBox();
+    });
+    requestAnimFrame(draw);
 }
 
 function draw() {

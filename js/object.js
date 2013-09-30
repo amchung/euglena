@@ -38,3 +38,7 @@ function drawBox(box_X,box_Y,box_L){
     obj_c.stroke();	
 }
 
+function resetBox(){
+	ObjX = obj_canvas.width/2;
+	ObjY = obj_canvas.height/2;
+}
