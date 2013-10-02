@@ -1,4 +1,4 @@
-(function(window){ "use strict";
+/*(function(window){ "use strict";
 
 // jsmpeg by Dominic Szablewski - phoboslab.org, github.com/phoboslab
 //
@@ -22,7 +22,7 @@ var requestAnimFrame = (function(){
 		function( callback ){
 			window.setTimeout(callback, 1000 / 60);
 		};
-})();
+})();*/
 		
 var jsmpeg = window.jsmpeg = function( url, opts ) {
 	opts = opts || {};
@@ -2222,5 +2222,5 @@ BitReader.prototype.rewind = function(count) {
 	return (this.index -= count);
 };
 	
-})(window);
+//})(window);
 

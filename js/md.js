@@ -79,7 +79,7 @@ function newPictureComplete() {
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, ObjX, ObjY, 10, ObjR); 
+      res = compare(img1, img2, ObjX, ObjY, 6, ObjR); 
     }
     catch(e) {
       // errors can happen if the pictures were corrupted during transfer
@@ -97,8 +97,8 @@ function newPictureComplete() {
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }
     
-    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/6+(Math.random()-0.5)*10*brown_const;
-    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/6+(Math.random()-0.5)*10*brown_const;
+    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*10*brown_const;
+    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*10*brown_const;
     ObjX=Math.max(objx,ObjR);
     ObjX=Math.min(ObjX,640-ObjR);
     ObjX=Math.round(ObjX/2)*2;
@@ -114,14 +114,18 @@ function newPictureComplete() {
   img2.onload = null;
   // load a new picture into img1
   img1 = new Image();
-  img1.onload=newPictureComplete;
+  //img1.onload=newPictureComplete;
+  img1.onload=requestAnimFrame(newPictureComplete);
 
   // load next picture in a few milliseconds
   // the server blocks anyway until a fresh picture has arrived, so it can never be faster
   // than the framerate. This timeout is intended to have the option
   // to lower the required processing power at client side.
-  window.setTimeout("img1.src=video_canvas.toDataURL('image/png');", 333);
+  //window.setTimeout("img1.src=video_canvas.toDataURL('image/png');", 333);
+  img1.src=video_canvas.toDataURL('image/png');
 }
+
+
 
 /*
   Initialize the elements
@@ -141,7 +145,7 @@ function setupMotionDetection() {
 
 function runMotionDetection(){
   img1 = new Image();
-  img1.onload=newPictureComplete;
+  img1.onload=requestAnimFrame(newPictureComplete);
   img1.src = video_canvas.toDataURL("image/png");
 }
 
