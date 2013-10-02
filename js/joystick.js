@@ -120,6 +120,15 @@ function onReady(event) {
 	$('#button').click(function(){
         resetBox();
     });
+    
+    $("#slider").slider({
+        step: 0.05,
+        min : 0.0,
+        max : 1.0
+    });
+
+    $('#value').text("Value: 0.5");
+    
     requestAnimFrame(draw);
 }
 
@@ -309,3 +318,9 @@ function resetCanvas(e) {
     // make sure we scroll to the top left. 
     window.scrollTo(0, 0);
 }
+
+    $( "#slider" ).bind( "slide", function(event, ui) {
+        var value = ui.value;
+            $('#value').text("Value: " + value.toFixed(2));
+            brown_const = value;
+    })

@@ -75,10 +75,11 @@ function newPictureComplete() {
   // just compare if there are two pictures
   if ( img2 != null ) {
     var res;
+    var ObjR=56;
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, ObjX, ObjY, 4, 56); 
+      res = compare(img1, img2, ObjX, ObjY, 4, ObjR); 
     }
     catch(e) {
       // errors can happen if the pictures were corrupted during transfer
@@ -95,11 +96,11 @@ function newPictureComplete() {
     if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }else{
-    ObjX=Math.max(ObjX+(res[0]+res[2]-res[1]-res[3])/6,0);
-    ObjX=Math.min(ObjX+(res[0]+res[2]-res[1]-res[3])/6,640);
+    ObjX=Math.max(ObjX+(res[0]+res[2]-res[1]-res[3])/6,ObjR);
+    ObjX=Math.min(ObjX+(res[0]+res[2]-res[1]-res[3])/6,640-ObjR);
     ObjX=Math.round(ObjX/2)*2;
-    ObjY=Math.max(ObjY+(res[0]+res[1]-res[2]-res[3])/6,0);
-    ObjY=Math.min(ObjY+(res[0]+res[1]-res[2]-res[3])/6,480);
+    ObjY=Math.max(ObjY+(res[0]+res[1]-res[2]-res[3])/6,ObjR);
+    ObjY=Math.min(ObjY+(res[0]+res[1]-res[2]-res[3])/6,480-ObjR);
     ObjY=Math.round(ObjY/2)*2;}
 
     drawBox(ObjX,ObjY,ObjL,res[0]+res[1]+res[2]+res[3]);
