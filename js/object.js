@@ -10,7 +10,7 @@ cp_canvas = null;
 var video_canvas,
 video_c;
 
-var brown_const=0.5;
+var brown_const=0;
 
 function setupVidCanvas() {
 	// Show loading notice
