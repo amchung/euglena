@@ -97,8 +97,8 @@ function newPictureComplete() {
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }
     
-    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/6+(Math.random()-0.5)*10;
-    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/6+(Math.random()-0.5)*10;
+    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/6+(Math.random()-0.5)*10*brown_const;
+    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/6+(Math.random()-0.5)*10*brown_const;
     ObjX=Math.max(objx,ObjR);
     ObjX=Math.min(ObjX,640-ObjR);
     ObjX=Math.round(ObjX/2)*2;

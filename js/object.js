@@ -32,7 +32,7 @@ function setupObjCanvas() {
 
 function drawBox(box_X,box_Y,box_L,totalRes){
 	obj_c.clearRect(0, 0, obj_canvas.width, obj_canvas.height);
-	obj_c.strokeStyle = ( totalRes > 0 ) ? "rgba(255,255,255,1)" : "rgba(250,102,0,1)";
+	obj_c.strokeStyle = ( totalRes > 0 ) ? "rgba(253,172,13,1)" : "rgba(250,102,0,1)";
     obj_c.lineWidth = 2;
 	
 	obj_c.beginPath();
