@@ -321,6 +321,7 @@ function resetCanvas(e) {
 
     $( "#slider" ).bind( "slide", function(event, ui) {
         var value = ui.value;
-            $('#value').text("Value: " + value.toFixed(2));
-            brown_const = value;
+        $('#value').text("Value: " + value.toFixed(2));
+        brown_const = value;
+        console.log(brown_const);
     })
