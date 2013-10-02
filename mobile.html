@@ -1,0 +1,97 @@
+<!-- 
+    Sample refactored by David Rousset - Microsoft France - http://blogs.msdn.com/davrous 
+    Using Hand.js to support all platforms
+-->
+<!--
+    Multi-touch game controller demo. Original work by @seb_ly.
+    For more information, see http://sebleedelisle.com/2011/04/multi-touch-game-controller-in-javascripthtml5-for-ipad
+-->
+<!-- Based on https://github.com/sebleedelisle/JSTouchController/blob/master/TouchControl.html 
+
+    Copyright (c)2010-2011, Seb Lee-Delisle, sebleedelisle.com. All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided 
+    that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, 
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+      this list of conditions and the following disclaimer in the documentation 
+      and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS 
+    OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+    AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+    OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; height=device-height; initial-scale=1.0; maximum-scale=1.0;" />
+    <title>Euglena Livecam</title>
+    <link rel="stylesheet" href="css/euglena.css"/>
+    <link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/layout.css"/>
+    <link rel="stylesheet" href="css/skeleton.css"/>
+    <link rel="stylesheet" href="libs/jquery-ui/jquery-ui-1.10.0.custom.css"/>
+	<script src="dist/hand.minified.js"></script>
+    <script src="dist/Collection.js"></script>
+    <script src="dist/Vector2.js"></script>
+    <script src="js/VectorLED.js"></script>
+	<script src="dist/Breakout.js"></script>
+	<script src="libs/jquery-1.10.2.min.js"></script>
+	<script src="libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="libs/jquery.ui.touch-punch.min.js"></script>
+	<script src="js/m_object.js"></script>
+	<script src="js/joystick.js"></script>
+	<script src="js/md.js"></script>
+</head>
+<body>
+	<div class="container" style = "padding: 10px">
+		<div>
+			<div>
+				<h2 style="color: #FA6600;">Euglena Livecam</h1>
+			</div>
+    		<div id="canvasArea" style = "padding: 10px">
+				<canvas id="videoCanvas" style="z-index: 1; position:absolute">
+					<p>
+						Please use a browser that supports the Canvas Element, like
+						<a href="http://www.google.com/chrome">Chrome</a>,
+						<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+						<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+					</p>
+				</canvas>
+				<canvas id="objCanvas" style="z-index: 2; position:absolute"></canvas>
+			</div>
+		</div>
+		<div id="controlArea" style = "width:240px; padding: 10px; position:absolute; left: 700px">
+			<div>
+				<h5>LED control</h1>
+			</div>
+			<div style = "background:#000; padding: 8px; margin: 2px">
+				<canvas id="controlCanvas" style="z-index: 3"></canvas>
+			</div>
+			<div>
+				<button id="button" class="btn" type="button">reset box</button>
+				<p>Use the slider to set the random motion radius</p>
+            	<p id="slider"></p>
+            	<small id="value"></small>
+			</div>
+
+	    </div>
+	    <div id="mdArea" style = "width:640px; padding: 10px;position:absolute; left: 0px;visibility:hidden;">
+			<div>
+				<h5>Motion Detection</h1>
+			</div>
+			<div style = "background:#000;">
+				<canvas id="mdCanvas" style="z-index: 4;"></canvas>
+				<!--<canvas id="testCanvas" style="z-index: 4; width: 640px; height: 480px;"></canvas>-->
+			</div>
+	    </div>
+	</div>
+</body>
+</html>

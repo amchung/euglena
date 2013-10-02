@@ -79,7 +79,7 @@ function newPictureComplete() {
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
-      res = compare(img1, img2, ObjX, ObjY, 4, ObjR); 
+      res = compare(img1, img2, ObjX, ObjY, 10, ObjR); 
     }
     catch(e) {
       // errors can happen if the pictures were corrupted during transfer
