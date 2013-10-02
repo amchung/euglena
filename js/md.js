@@ -95,13 +95,16 @@ function newPictureComplete() {
     //md_ctx.fillRect (0, 50, 25, 50); md_ctx.fillRect (75, 50, 25, 50);
     if ((res[0]>400)||(res[1]>400)||(res[2]>400)||(res[3]>400)){
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
-    }else{
-    ObjX=Math.max(ObjX+(res[0]+res[2]-res[1]-res[3])/6,ObjR);
-    ObjX=Math.min(ObjX+(res[0]+res[2]-res[1]-res[3])/6,640-ObjR);
+    }
+    
+    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/6+(Math.random()-0.5)*10;
+    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/6+(Math.random()-0.5)*10;
+    ObjX=Math.max(objx,ObjR);
+    ObjX=Math.min(ObjX,640-ObjR);
     ObjX=Math.round(ObjX/2)*2;
-    ObjY=Math.max(ObjY+(res[0]+res[1]-res[2]-res[3])/6,ObjR);
-    ObjY=Math.min(ObjY+(res[0]+res[1]-res[2]-res[3])/6,480-ObjR);
-    ObjY=Math.round(ObjY/2)*2;}
+    ObjY=Math.max(objy,ObjR);
+    ObjY=Math.min(ObjY,480-ObjR);
+    ObjY=Math.round(ObjY/2)*2;
 
     drawBox(ObjX,ObjY,ObjL,res[0]+res[1]+res[2]+res[3]);
   }
