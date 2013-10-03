@@ -75,7 +75,7 @@ function newPictureComplete() {
   // just compare if there are two pictures
   if ( img2 != null ) {
     var res;
-    var ObjR=45;
+    var ObjR=50;
 
     try {
       // compare the two pictures, the given threshold helps to ignore noise
@@ -97,8 +97,8 @@ function newPictureComplete() {
     	res[0]=0;res[1]=0;res[2]=0;res[3]=0;
     }
     
-    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*10*brown_const;
-    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*10*brown_const;
+    var objx=ObjX+(res[0]+res[2]-res[1]-res[3])/4+(Math.random()-0.5)*20*brown_const;
+    var objy=ObjY+(res[0]+res[1]-res[2]-res[3])/4+(Math.random()-0.5)*20*brown_const;
     ObjX=Math.max(objx,ObjR);
     ObjX=Math.min(ObjX,640-ObjR);
     ObjX=Math.round(ObjX/2)*2;
