@@ -57,6 +57,12 @@ function drawBox(box_X,box_Y,box_L,totalRes){
 		obj_c.beginPath();
     	obj_c.fillStyle = "#fff"; 
     	obj_c.fillText('score: +'+score,box_X - box_L/2, box_Y - box_L/2-10);
+    	
+    	obj_c.moveTo(scoreX, scoreY);
+    	obj_c.strokeStyle = "#fff";
+    	obj_c.lineWidth = 1;
+		obj_c.lineTo(ObjX, ObjY);
+    	obj_c.stroke();	
     }
 }
 
@@ -73,17 +79,16 @@ function resetBox(){
 	int_timer = max_timer;
 	
 	gametimer=requestAnimFrame(countDown);
-	//gametimer=setTimeout("countDown();",100);
 }
 
 function countDown(){
 	int_timer = int_timer - 0.1;
 	if (int_timer > 0){
-		score = score + (Math.pow(scoreX-ObjX,2) + Math.pow(scoreY-ObjY,2))*10;
-		scoreX = ObjX;
-		scoreY = ObjY;
+		//score = score + (Math.pow(scoreX-ObjX,2) + Math.pow(scoreY-ObjY,2))*10;
+		//scoreX = ObjX;
+		//scoreY = ObjY;
+		score = (Math.pow(scoreX-ObjX,2) + Math.pow(scoreY-ObjY,2))*10;
 		gametimer=requestAnimFrame(countDown);
-		//gametimer=setTimeout("countDown();",100);
 	}else{
 		window.clearTimeout(gametimer);
 		
