@@ -2,7 +2,7 @@ var obj_canvas,
 obj_c,
 ObjX,
 ObjY,
-ObjL=80,
+ObjL=70,
 img1 = null,
 img2 = null,
 cp_canvas = null;
