@@ -134,7 +134,7 @@ function onReady(event) {
         $('#value').text("Value: " + value.toFixed(2));
         brown_const = value;
         console.log(brown_const);
-    })
+    });
     
     requestAnimFrame(draw);
 }
